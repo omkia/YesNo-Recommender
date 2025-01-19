@@ -1,0 +1,78 @@
+{% extends 'advisor/base.html' %}
+
+{% block title %}Your Recommendations - Advisor{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+    <h1 style="color: #2c3e50; margin-bottom: 2rem;">Your Recommendations History</h1>
+    
+    {% if activities %}
+        {% for activity in activities %}
+        <div style="
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        ">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                <h3 style="color: #2c3e50;">
+                    {{ activity.activity_type|title }} Recommendation
+                </h3>
+                <span style="color: #7f8c8d;">
+                    {{ activity.created_at|date:"F j, Y, P" }}
+                </span>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <h4 style="color: #34495e; margin-bottom: 0.5rem;">Your Answers:</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    {% for key, value in activity.answers.items %}
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>{{ key|title }}:</strong> {{ value }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div>
+                <h4 style="color: #34495e; margin-bottom: 0.5rem;">Recommendation:</h4>
+                <p style="color: #2c3e50;">{{ activity.recommendation }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        ">
+            <p style="color: #7f8c8d; margin-bottom: 1rem;">
+                You haven't received any recommendations yet.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="{% url 'advisor:questionnaire' %}" style="
+                    text-decoration: none;
+                    background-color: #3498db;
+                    color: white;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 4px;
+                ">
+                    Try Fitness Questionnaire
+                </a>
+                <a href="{% url 'advisor:gifts' %}" style="
+                    text-decoration: none;
+                    background-color: #2ecc71;
+                    color: white;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 4px;
+                ">
+                    Try Gift Advisor
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

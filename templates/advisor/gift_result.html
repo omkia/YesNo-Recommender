@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .result-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .recommendation {
+            margin: 20px 0;
+        }
+        .item-name {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        .description {
+            color: #34495e;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .features-list {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .features-list h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .features-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .features-list li {
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        .suggestions {
+            margin-top: 20px;
+        }
+        .price-range {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 15px;
+        }
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Perfect Gift Suggestion</h1>
+        <div class="recommendation">
+            <div class="item-name">{{ recommendation.item }}</div>
+            <p class="description">{{ recommendation.description }}</p>
+
+            <div class="features-list">
+                <h3>Key Features:</h3>
+                <ul>
+                    {% for feature in recommendation.features %}
+                        <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="suggestions">
+                <h3>Recommended Products:</h3>
+                <ul>
+                    {% for suggestion in recommendation.suggestions %}
+                        <li>{{ suggestion }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="price-range">
+                Estimated Price Range: {{ recommendation.price_range }}
+            </div>
+        </div>
+
+        <a href="{% url 'advisor:gifts' %}" class="back-button">Try Again</a>
+    </div>
+</body>
+</html>

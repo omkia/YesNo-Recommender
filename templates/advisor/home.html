@@ -1,0 +1,43 @@
+{% extends 'advisor/base.html' %}
+
+{% block title %}Home - Advisor{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 2rem;">
+    <h1 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 2rem;">
+        Welcome to Advisor
+    </h1>
+    
+    <div style="max-width: 800px; margin: 0 auto;">
+        <p style="font-size: 1.2rem; color: #34495e; margin-bottom: 2rem;">
+            Get personalized recommendations for fitness activities and perfect gifts based on your preferences.
+        </p>
+        
+        <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'advisor:questionnaire' %}" style="
+                text-decoration: none;
+                background-color: #3498db;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                transition: background-color 0.3s;
+            ">
+                Fitness Questionnaire
+            </a>
+            
+            <a href="{% url 'advisor:gifts' %}" style="
+                text-decoration: none;
+                background-color: #2ecc71;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                transition: background-color 0.3s;
+            ">
+                Gift Advisor
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

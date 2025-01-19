@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Gift Advisor</title>
+        <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+
+        /* Navigation styles */
+        .navbar {
+            background-color: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #34495e;
+        }
+
+        /* Main content container */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Messages/Alerts */
+        .messages {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.75rem;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+    <style>
+   
+        .question-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'advisor:home' %}" class="nav-brand">Advisor</a>
+            <div class="nav-links">
+                <a href="{% url 'advisor:home' %}">Home</a>
+                <a href="{% url 'advisor:questionnaire' %}">Questions</a>
+                <a href="{% url 'advisor:gifts' %}">Gifts</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'advisor:recommendations' %}">Recommendations</a>
+
+
+                    <form method="post" action="{% url 'advisor:logout' %}">
+    {% csrf_token %}
+    <button type="submit">logout</button>
+</form>
+{#                    <a href="{% url 'advisor:logout' %}">Logout</a>#}
+                {% else %}
+                    <a href="{% url 'advisor:login' %}">Login</a>
+                    <a href="{% url 'advisor:signup' %}">Signup</a>
+                {% endif %}
+                <a href="{% url 'advisor:about' %}">About Us</a>
+            </div>
+        </div>
+    </nav>
+    <div class="question-container">
+        <h1>Tech Gift Advisor</h1>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="question">
+                <p>Is this person always on the move and frequently dealing with low battery issues?</p>
+                <div class="question-help">Consider their daily routine and if they often need to charge devices on the go</div>
+                <label>
+                    <input type="radio" name="mobility" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="mobility" value="no"> No
+                </label>
+            </div>
+
+            <div class="question">
+                <p>Do they have a passion for photography, videography, or sharing visual content?</p>
+                <div class="question-help">Think about if they enjoy creating and sharing visual memories</div>
+                <label>
+                    <input type="radio" name="content_creation" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="content_creation" value="no"> No
+                </label>
+            </div>
+
+            <div class="question">
+                <p>Are they an avid consumer of audio content (music, podcasts, audiobooks)?</p>
+                <div class="question-help">Consider their daily listening habits and preferences</div>
+                <label>
+                    <input type="radio" name="audio" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="audio" value="no"> No
+                </label>
+            </div>
+
+            <div class="question">
+                <p>Do they need to focus in noisy environments or value sound isolation?</p>
+                <div class="question-help">Think about their work environment and noise preferences</div>
+                <label>
+                    <input type="radio" name="environment" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="environment" value="no"> No
+                </label>
+            </div>
+
+            <div class="question">
+                <p>Do they often host gatherings or share music in social settings?</p>
+                <div class="question-help">Consider their social habits and music sharing preferences</div>
+                <label>
+                    <input type="radio" name="social_music" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="social_music" value="no"> No
+                </label>
+            </div>
+
+            <div class="question">
+                <p>Are they interested in monitoring their health and fitness activities?</p>
+                <div class="question-help">Think about their fitness goals and health consciousness</div>
+                <label>
+                    <input type="radio" name="health_tracking" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="health_tracking" value="no"> No
+                </label>
+            </div>
+
+            <div class="question">
+                <p>Would they appreciate a sophisticated timepiece with smart features?</p>
+                <div class="question-help">Consider their style preferences and tech comfort level</div>
+                <label>
+                    <input type="radio" name="smart_watch" value="yes" required> Yes
+                </label>
+                <label>
+                    <input type="radio" name="smart_watch" value="no"> No
+                </label>
+            </div>
+
+            <button type="submit">Get Gift Suggestion</button>
+        </form>
+    </div>
+</body>
+</html>
